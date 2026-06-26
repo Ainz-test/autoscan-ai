@@ -563,7 +563,7 @@ function ScanScreen(props) {
           React.createElement("span",{style:{color:T.dark,fontSize:11,flexShrink:0,marginTop:2}},(i+1)+"."),
           React.createElement("span",{style:{fontSize:12,color:T.navy,lineHeight:1.5}},tip)
         );
-      })
+      }),
       React.createElement("div",{style:{display:"flex",gap:10,marginTop:16}},
         React.createElement("button",{
           onClick:function(){setErrorMsg(null);setStep("choose");},
