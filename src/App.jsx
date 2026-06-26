@@ -153,16 +153,44 @@ function Spinner() {
   });
 }
 
+// ── Tab Icons (SVG, no Unicode issues) ───────────────────────────────────────
+function TabIcon(props) {
+  var id = props.id; var active = props.active;
+  var c = active ? "#fff" : "rgba(255,255,255,.45)";
+  var s = {width:20,height:20,display:"block",flexShrink:0};
+  if (id === "home") return React.createElement("svg",{viewBox:"0 0 24 24",fill:"none",style:s},
+    React.createElement("path",{d:"M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H5a1 1 0 01-1-1V9.5z",stroke:c,strokeWidth:"1.8",strokeLinejoin:"round"}),
+    React.createElement("path",{d:"M9 21V12h6v9",stroke:c,strokeWidth:"1.8",strokeLinejoin:"round"})
+  );
+  if (id === "scan") return React.createElement("svg",{viewBox:"0 0 24 24",fill:"none",style:s},
+    React.createElement("circle",{cx:"12",cy:"12",r:"3",stroke:c,strokeWidth:"1.8"}),
+    React.createElement("path",{d:"M3 7V4h3M21 7V4h-3M3 17v3h3M21 17v3h-3",stroke:c,strokeWidth:"1.8",strokeLinecap:"round"})
+  );
+  if (id === "report") return React.createElement("svg",{viewBox:"0 0 24 24",fill:"none",style:s},
+    React.createElement("rect",{x:"4",y:"3",width:"16",height:"18",rx:"2",stroke:c,strokeWidth:"1.8"}),
+    React.createElement("path",{d:"M8 8h8M8 12h8M8 16h5",stroke:c,strokeWidth:"1.8",strokeLinecap:"round"})
+  );
+  if (id === "garages") return React.createElement("svg",{viewBox:"0 0 24 24",fill:"none",style:s},
+    React.createElement("path",{d:"M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z",stroke:c,strokeWidth:"1.8"}),
+    React.createElement("circle",{cx:"12",cy:"9",r:"2.5",stroke:c,strokeWidth:"1.8"})
+  );
+  if (id === "profile") return React.createElement("svg",{viewBox:"0 0 24 24",fill:"none",style:s},
+    React.createElement("circle",{cx:"12",cy:"8",r:"4",stroke:c,strokeWidth:"1.8"}),
+    React.createElement("path",{d:"M4 20c0-4 3.58-7 8-7s8 3 8 7",stroke:c,strokeWidth:"1.8",strokeLinecap:"round"})
+  );
+  return null;
+}
+
 // ── Navbar ───────────────────────────────────────────────────────────────────
 function Navbar(props) {
   var tab=props.tab; var setTab=props.setTab;
   var ar=props.ar;   var setAr=props.setAr;
   var tabs = [
-    {id:"home",    icon:"⌂",  en:"Home",    ar:"الرئيسية"},
-    {id:"scan",    icon:"◎",  en:"Scan",    ar:"مسح"},
-    {id:"report",  icon:"⊞", en:"Report",  ar:"التقرير"},
-    {id:"garages", icon:"⧁",  en:"Garages", ar:"المراكز"},
-    {id:"profile", icon:"◉",  en:"Profile", ar:"الملف"},
+    {id:"home",    icon:"home",    en:"Home",    ar:"الرئيسية"},
+    {id:"scan",    icon:"scan",    en:"Scan",    ar:"مسح"},
+    {id:"report",  icon:"report",  en:"Report",  ar:"التقرير"},
+    {id:"garages", icon:"garages", en:"Garages", ar:"المراكز"},
+    {id:"profile", icon:"profile", en:"Profile", ar:"الملف"},
   ];
   return React.createElement("header", {
     style: {
@@ -184,7 +212,9 @@ function Navbar(props) {
         }
       },
         React.createElement("div", {style:{display:"flex",alignItems:"center",gap:8}},
-          React.createElement("span",{style:{fontSize:20}},"??"),
+          React.createElement("svg",{width:24,height:24,viewBox:"0 0 24 24",fill:"none",style:{flexShrink:0}},
+            React.createElement("path",{d:"M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z",stroke:"#E63946",strokeWidth:"2",strokeLinecap:"round",strokeLinejoin:"round"})
+          ),
           React.createElement("span",{style:{color:"#fff",fontSize:17,fontWeight:800,letterSpacing:"-0.3px"}},"AutoScan AI")
         ),
         React.createElement("div", {
@@ -206,7 +236,7 @@ function Navbar(props) {
           })
         )
       ),
-      React.createElement("div",{style:{display:"flex",borderTop:"1px solid rgba(255,255,255,.08)",marginTop:4}},
+      React.createElement("nav",{style:{display:"flex",borderTop:"1px solid rgba(255,255,255,.08)",marginTop:4}},
         tabs.map(function(t){
           var active = tab===t.id;
           return React.createElement("button",{
@@ -214,13 +244,35 @@ function Navbar(props) {
             onClick:function(){setTab(t.id);},
             style:{
               flex:1,background:"none",border:"none",cursor:"pointer",
-              display:"flex",flexDirection:"column",alignItems:"center",gap:2,
-              padding:"8px 4px 10px"
+              display:"flex",flexDirection:"column",alignItems:"center",gap:3,
+              padding:"8px 2px 10px",position:"relative",
+              WebkitTapHighlightColor:"transparent",
+              minWidth:0
             }
           },
-            React.createElement("span",{style:{fontSize:18}},t.icon),
-            React.createElement("span",{style:{fontSize:10,fontWeight:active?700:400,color:active?"#fff":"rgba(255,255,255,.45)",transition:"color .2s"}},ar?t.ar:t.en),
-            active && React.createElement("div",{style:{width:20,height:2.5,background:T.red,borderRadius:2,marginTop:1}})
+            React.createElement("div",{
+              style:{
+                width:36,height:36,borderRadius:10,
+                display:"flex",alignItems:"center",justifyContent:"center",
+                background:active?"rgba(230,57,70,.18)":"transparent",
+                transition:"background .2s"
+              }
+            }, React.createElement(TabIcon,{id:t.icon,active:active})),
+            React.createElement("span",{
+              style:{
+                fontSize:10,fontWeight:active?700:400,
+                color:active?"#fff":"rgba(255,255,255,.4)",
+                transition:"color .2s",
+                overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",
+                maxWidth:"100%"
+              }
+            }, ar?t.ar:t.en),
+            active && React.createElement("div",{
+              style:{
+                position:"absolute",bottom:0,left:"50%",transform:"translateX(-50%)",
+                width:24,height:2.5,background:T.red,borderRadius:"2px 2px 0 0"
+              }
+            })
           );
         })
       )
@@ -237,10 +289,10 @@ function HomeScreen(props) {
   var low  = faults.filter(function(f){return f.severity==="low";}).length;
 
   var features = [
-    {icon:"??",en:"AI-Powered OCR",ar:"تعرف بصري ذكي",sub:"Reads Arabic & English inspection sheets",subAr:"يقرأ ورق الفحص بالعربية والإنجليزية"},
-    {icon:"??",en:"Smart Diagnosis",ar:"تشخيص ذكي",sub:"GPT-4o analyzes every fault in seconds",subAr:"يحلل كل عطل خلال ثوان"},
-    {icon:"??️",en:"Visual Mapping",ar:"تخطيط مرئي",sub:"See exactly where each fault is on the car",subAr:"شاهد موقع كل عطل على السيارة"},
-    {icon:"??",en:"Garage Locator",ar:"مواقع التصليح",sub:"Find vetted shops in Qatar & GCC",subAr:"اعثر على مراكز معتمدة في قطر والخليج"},
+    {icon:"🔍",en:"AI-Powered OCR",ar:"تعرف بصري ذكي",sub:"Reads Arabic & English inspection sheets",subAr:"يقرأ ورق الفحص بالعربية والإنجليزية"},
+    {icon:"brain",en:"Smart Diagnosis",ar:"تشخيص ذكي",sub:"GPT-4o analyzes every fault in seconds",subAr:"يحلل كل عطل خلال ثوان"},
+    {icon:"🗺",en:"Visual Mapping",ar:"تخطيط مرئي",sub:"See exactly where each fault is on the car",subAr:"شاهد موقع كل عطل على السيارة"},
+    {icon:"pin",en:"Garage Locator",ar:"مواقع التصليح",sub:"Find vetted shops in Qatar & GCC",subAr:"اعثر على مراكز معتمدة في قطر والخليج"},
   ];
 
   return React.createElement("div", null,
@@ -463,17 +515,27 @@ function ScanScreen(props) {
       var base64 = reader.result.split(",")[1];
       var mediaType = imageFile.type || "image/jpeg";
 
-      var diagPrompt = "You are an expert automotive diagnostic engineer for GCC-market vehicles. "
-        + "Analyze this vehicle inspection sheet image carefully. Read ALL text, fault codes, checked boxes, "
-        + "handwritten notes, and marks indicating problems. "
-        + "Return ONLY a valid JSON array with no preamble, no markdown, no explanation. Raw JSON only. "
-        + "Schema: [{id,severity(high/medium/low),zone(engine_bay/front_left_wheel/front_right_wheel/"
-        + "rear_left_wheel/rear_right_wheel/underbody_front/underbody_rear/cabin_dashboard/"
-        + "battery_electrical/fuel_system),code(DTC or null),nameEn,nameAr,fn,immediate,longterm,"
-        + "steps(array of strings),cost}]. "
-        + "high=safety risk do not drive, medium=repair within 2-4 weeks, low=minor within 3-6 months. "
-        + "Vehicle: "+make+" "+model+" "+year+". "
-        + "If not an inspection sheet or no faults found, return empty array: []";
+      var diagPrompt = ""
+        + "TASK: Analyze this vehicle inspection sheet and return a JSON array of faults."
+        + " Read EVERY line of text including Arabic, English, fault codes, checked boxes, X marks, circles, and handwritten notes."
+        + " Be thorough - inspect the entire document."
+        + " Vehicle: "+make+" "+model+" "+year+"."
+        + " OUTPUT FORMAT: Return ONLY a raw JSON array. No markdown, no code blocks, no explanation, no preamble. Start your response with [ and end with ]."
+        + " SCHEMA: Each item must have exactly these fields:"
+        + " id (string like F001),"
+        + " severity (exactly one of: high, medium, low),"
+        + " zone (exactly one of: engine_bay, front_left_wheel, front_right_wheel, rear_left_wheel, rear_right_wheel, underbody_front, underbody_rear, cabin_dashboard, battery_electrical, fuel_system),"
+        + " code (OBD2 DTC code string like P0171 if present, otherwise null),"
+        + " nameEn (English name of component and fault),"
+        + " nameAr (Arabic name of component and fault),"
+        + " fn (one sentence: what this component does),"
+        + " immediate (immediate risk if not repaired),"
+        + " longterm (long-term consequences and cost escalation),"
+        + " steps (array of 3-5 repair step strings),"
+        + " cost (estimated repair cost range like $150-$400)."
+        + " SEVERITY RULES: high=safety critical do not drive, medium=repair within 2-4 weeks, low=cosmetic or minor repair within 3-6 months."
+        + " If you see no faults or this is not an inspection sheet, return exactly: []"
+        + " CRITICAL: Your entire response must be valid JSON. Start with [ and end with ]. Nothing else.";
 
       var body = JSON.stringify({
         model: "claude-sonnet-4-6",
@@ -512,15 +574,46 @@ function ScanScreen(props) {
             }
             return;
           }
-          var raw = (data.content && data.content[0] && data.content[0].text) || "[]";
-          var clean = raw.replace(/```json|```/g,"").trim();
+          var raw = (data.content && data.content[0] && data.content[0].text) || "";
+          if (!raw) { fail("Empty response from AI. Please try again."); return; }
           var faults;
           try {
+            // Strategy 1: clean markdown fences and parse directly
+            var clean = raw.replace(/```json/gi,"").replace(/```/g,"").trim();
+            // Strategy 2: if it starts with { it might be a wrapped object
+            if (clean.charAt(0) === "{") {
+              var obj = JSON.parse(clean);
+              clean = JSON.stringify(obj.faults || obj.results || obj.data || obj.items || []);
+            }
+            // Strategy 3: extract the JSON array from anywhere in the text
+            if (clean.charAt(0) !== "[") {
+              var match = clean.match(/\[[\s\S]*\]/);
+              if (match) { clean = match[0]; }
+              else { clean = "[]"; }
+            }
             var parsed = JSON.parse(clean);
-            faults = Array.isArray(parsed) ? parsed : (parsed.faults || []);
+            faults = Array.isArray(parsed) ? parsed : [];
+            // Strategy 4: if still empty, try to find nested array
+            if (faults.length === 0 && typeof parsed === "object" && parsed !== null) {
+              var keys = Object.keys(parsed);
+              for (var ki = 0; ki < keys.length; ki++) {
+                if (Array.isArray(parsed[keys[ki]])) { faults = parsed[keys[ki]]; break; }
+              }
+            }
           } catch(e) {
-            fail("AI returned unexpected format. Please try again.");
-            return;
+            // Strategy 5: last resort - try to extract JSON objects manually
+            try {
+              var objMatches = raw.match(/\{[^{}]*"severity"[^{}]*\}/g);
+              if (objMatches && objMatches.length > 0) {
+                faults = objMatches.map(function(s){ try{return JSON.parse(s);}catch(e2){return null;} }).filter(Boolean);
+              } else {
+                fail("Could not parse AI response. Raw: "+raw.substring(0,200));
+                return;
+              }
+            } catch(e3) {
+              fail("Parse error: "+e.message+". Please try again.");
+              return;
+            }
           }
           var order = {high:0,medium:1,low:2};
           faults.sort(function(a,b){ return (order[a.severity]||3)-(order[b.severity]||3); });
@@ -678,7 +771,7 @@ function ScanScreen(props) {
           className:"hover-lift",
           style:{background:T.navy,color:"#fff",border:"none",borderRadius:18,padding:22,fontSize:16,fontWeight:700,cursor:"pointer",display:"flex",alignItems:"center",gap:16,boxShadow:"0 6px 24px rgba(13,27,42,.25)"}
         },
-          React.createElement("span",{style:{fontSize:36}},"??️"),
+          React.createElement("span",{style:{fontSize:36}},"🖼"),
           React.createElement("div",{style:{textAlign:"left"}},
             React.createElement("div",null, ar?"رفع صورة من الهاتف":"Upload Photo from Phone"),
             React.createElement("div",{style:{fontSize:12,fontWeight:400,opacity:.7,marginTop:3}}, ar?"اختر صورة من معرض الصور":"Choose from your photo gallery")
@@ -689,7 +782,7 @@ function ScanScreen(props) {
           className:"hover-lift",
           style:{background:T.card,color:T.navy,border:"2px solid "+T.border,borderRadius:18,padding:22,fontSize:16,fontWeight:700,cursor:"pointer",display:"flex",alignItems:"center",gap:16}
         },
-          React.createElement("span",{style:{fontSize:36}},"??"),
+          React.createElement("svg",{width:36,height:36,viewBox:"0 0 24 24",fill:"none"},React.createElement("path",{d:"M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z",stroke:T.navy,strokeWidth:"1.5",strokeLinejoin:"round"}),React.createElement("circle",{cx:"12",cy:"13",r:"4",stroke:T.navy,strokeWidth:"1.5"})),
           React.createElement("div",{style:{textAlign:"left"}},
             React.createElement("div",null, ar?"التقاط بالكاميرا":"Take Photo with Camera"),
             React.createElement("div",{style:{fontSize:12,fontWeight:400,color:T.textMut,marginTop:3}}, ar?"افتح الكاميرا مباشرة":"Open live camera")
@@ -714,7 +807,7 @@ function ScanScreen(props) {
           ar?"وجّه الكاميرا نحو الورقة":"Point camera at the inspection sheet")
       ),
       React.createElement("button",{onClick:capturePhoto,style:{width:"100%",background:T.red,color:"#fff",border:"none",borderRadius:14,padding:16,fontSize:16,fontWeight:700,cursor:"pointer",boxShadow:"0 6px 20px rgba(230,57,70,.4)",marginBottom:10}},
-        "?? "+(ar?"التقاط الصورة":"Capture Photo")
+        "📷 "+(ar?"التقاط الصورة":"Capture Photo")
       ),
       React.createElement("input",{ref:galleryRef,type:"file",accept:"image/jpeg,image/png,image/webp,image/heic,image/heif",onChange:handleGallery,style:{display:"none"}}),
       React.createElement("button",{onClick:function(){setStep("choose");setErrorMsg(null);},style:{background:"none",border:"none",color:T.textMut,fontSize:13,cursor:"pointer",display:"block",margin:"8px auto 0"}},ar?"← العودة":"← Back")
@@ -780,7 +873,7 @@ function FaultCard(props) {
     ),
     exp && React.createElement("div",{style:{padding:"0 16px 16px",borderTop:"1px solid "+T.border}},
       [{icon:"⚠️",color:T.dark,title:ar?"الخطر الفوري":"Immediate Risk",body:fault.immediate},
-       {icon:"??",color:"#D97706",title:ar?"العواقب طويلة المدى":"Long-term",body:fault.longterm}]
+       {icon:null,color:"#D97706",title:ar?"العواقب طويلة المدى":"Long-term",body:fault.longterm}]
       .map(function(row){
         return React.createElement("div",{key:row.title,style:{marginTop:12}},
           React.createElement("div",{style:{fontSize:12,fontWeight:700,color:row.color,marginBottom:4}},row.icon+" "+row.title),
@@ -788,7 +881,7 @@ function FaultCard(props) {
         );
       }),
       React.createElement("div",{style:{marginTop:12}},
-        React.createElement("div",{style:{fontSize:12,fontWeight:700,color:T.teal,marginBottom:6}},"?? "+(ar?"خطوات الإصلاح":"Repair Steps")),
+        React.createElement("div",{style:{fontSize:12,fontWeight:700,color:T.teal,marginBottom:6}},"🔧 "+(ar?"خطوات الإصلاح":"Repair Steps")),
         fault.steps && fault.steps.map(function(s,i){
           return React.createElement("div",{key:i,style:{display:"flex",gap:8,marginBottom:6,alignItems:"flex-start"}},
             React.createElement("div",{style:{width:18,height:18,borderRadius:9,background:T.teal,color:"#fff",fontSize:10,fontWeight:700,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}},(i+1)),
@@ -808,7 +901,7 @@ function ReportScreen(props) {
   var _e = useState(null); var expanded=_e[0]; var setExpanded=_e[1];
 
   if (faults.length === 0) return React.createElement("div",{style:{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:64,gap:16,textAlign:"center",minHeight:400}},
-    React.createElement("div",{style:{fontSize:64,marginBottom:8}},"??"),
+    React.createElement("div",{style:{fontSize:64,marginBottom:8}},"📋"),
     React.createElement("div",{style:{fontSize:18,fontWeight:700,color:T.navy}},ar?"لا يوجد تقرير بعد":"No report yet"),
     React.createElement("div",{style:{fontSize:14,color:T.textSec,lineHeight:1.6,maxWidth:300}},ar?"امسح ورقة فحص سيارتك أولاً":"Scan an inspection sheet first")
   );
@@ -920,16 +1013,16 @@ function ProfileScreen(props) {
   var ar=props.ar; var setAr=props.setAr;
   return React.createElement("div",{style:{maxWidth:640,margin:"0 auto"}},
     React.createElement("div",{style:{background:"linear-gradient(135deg,"+T.hero+","+T.navy+")",padding:"32px 20px 36px",textAlign:"center"}},
-      React.createElement("div",{style:{width:76,height:76,borderRadius:38,background:"linear-gradient(135deg,"+T.red+","+T.amber+")",margin:"0 auto 12px",display:"flex",alignItems:"center",justifyContent:"center",fontSize:30,boxShadow:"0 8px 28px rgba(230,57,70,.4)"}},"??"),
+      React.createElement("div",{style:{width:76,height:76,borderRadius:38,background:"linear-gradient(135deg,"+T.red+","+T.amber+")",margin:"0 auto 12px",display:"flex",alignItems:"center",justifyContent:"center",fontSize:30,boxShadow:"0 8px 28px rgba(230,57,70,.4)"}},React.createElement("svg",{width:30,height:30,viewBox:"0 0 24 24",fill:"none"},React.createElement("circle",{cx:"12",cy:"8",r:"4",stroke:"#fff",strokeWidth:"2"}),React.createElement("path",{d:"M4 20c0-4 3.58-7 8-7s8 3 8 7",stroke:"#fff",strokeWidth:"2",strokeLinecap:"round"}))),
       React.createElement("div",{style:{color:"#fff",fontSize:19,fontWeight:800}},ar?"عبدالله الرشيدي":"Abdullah Al-Rashidi"),
-      React.createElement("div",{style:{color:"rgba(155,189,224,.8)",fontSize:13,marginTop:5}},"الدوحة، قطر ????")
+      React.createElement("div",{style:{color:"rgba(155,189,224,.8)",fontSize:13,marginTop:5}},"الدوحة، قطر 🇶🇦")
     ),
     React.createElement("div",{style:{padding:"20px 16px"}},
       // Language
       React.createElement(RevealCard,{style:{padding:18,marginBottom:14}},
         React.createElement("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center"}},
           React.createElement("div",null,
-            React.createElement("div",{style:{fontSize:14,fontWeight:700,color:T.navy}},"?? "+(ar?"اللغة":"Language")),
+            React.createElement("div",{style:{fontSize:14,fontWeight:700,color:T.navy}},"🌐 "+(ar?"اللغة":"Language")),
             React.createElement("div",{style:{fontSize:12,color:T.textSec,marginTop:2}},"Arabic / English")
           ),
           React.createElement("div",{style:{display:"flex",background:"#EEF2F7",borderRadius:20,padding:3,gap:2}},
@@ -941,7 +1034,7 @@ function ProfileScreen(props) {
       ),
       // Install PWA
       React.createElement(RevealCard,{delay:80,style:{padding:18,marginBottom:14}},
-        React.createElement("div",{style:{fontSize:14,fontWeight:700,color:T.navy,marginBottom:8}},"?? "+(ar?"تثبيت التطبيق على هاتفك":"Install App on Your Phone")),
+        React.createElement("div",{style:{fontSize:14,fontWeight:700,color:T.navy,marginBottom:8}},"📱 "+(ar?"تثبيت التطبيق على هاتفك":"Install App on Your Phone")),
         React.createElement("div",{style:{fontSize:13,color:T.textSec,lineHeight:1.6,marginBottom:12}},ar?"في Safari: اضغط على زر المشاركة ثم إضافة إلى الشاشة الرئيسية":"In Safari: tap Share ⬆️ then Add to Home Screen"),
         React.createElement("div",{style:{display:"flex",gap:8}},
           (ar?["١. افتح Safari","٢. اضغط مشاركة","٣. أضف للشاشة"]:["1. Open in Safari","2. Tap Share ⬆️","3. Add to Home Screen"]).map(function(s){
@@ -951,7 +1044,7 @@ function ProfileScreen(props) {
       ),
       // Security note
       React.createElement(RevealCard,{delay:120,style:{padding:18,background:"#F8F9FF",border:"1px solid #E0E7FF"}},
-        React.createElement("div",{style:{fontSize:13,fontWeight:700,color:"#3730A3",marginBottom:8}},"?? "+(ar?"خصوصية وأمان":"Privacy & Security")),
+        React.createElement("div",{style:{fontSize:13,fontWeight:700,color:"#3730A3",marginBottom:8}},"🔒 "+(ar?"خصوصية وأمان":"Privacy & Security")),
         React.createElement("div",{style:{fontSize:12,color:T.textSec,lineHeight:1.6}},ar?"صورك تبقى خاصة — لا يتم تخزينها. مفتاح API محمي على الخادم.":"Your images stay private and are never stored. The API key is protected server-side and never exposed to the browser.")
       )
     )
