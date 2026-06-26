@@ -361,7 +361,7 @@ Vehicle: ${make} ${model} ${year}
 
 If the image is not a vehicle inspection sheet or no faults are visible, return an empty array: []`;
 
-      const response = await fetch("/api/diagnose", {
+      const response = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
