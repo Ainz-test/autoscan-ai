@@ -1008,3 +1008,305 @@
   font-size: 13px;
   padding: 20px 0;
 }
+
+/* ----------------------------------------------------------------------------
+   Garages
+   -------------------------------------------------------------------------- */
+.garages-head {
+  padding: 28px 0 26px;
+  background:
+    radial-gradient(520px 220px at 100% 0%, rgba(56, 189, 248, 0.1), transparent 70%),
+    linear-gradient(180deg, var(--surface), var(--bg-soft));
+  border-bottom: 1px solid var(--border);
+}
+.garages-head .eyebrow {
+  display: block;
+  margin-bottom: 8px;
+}
+.garages-title {
+  font-size: clamp(22px, 4vw, 30px);
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.garages-lead {
+  font-size: 14px;
+  color: var(--text-soft);
+  margin: 0;
+}
+.garages-body {
+  padding-block: 22px 64px;
+  max-width: 720px;
+}
+.garage {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  margin-bottom: 12px;
+  overflow: hidden;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.garage.sel {
+  border-color: var(--accent-line);
+  box-shadow: var(--shadow);
+}
+.garage-main {
+  width: 100%;
+  text-align: start;
+  background: none;
+  border: none;
+  padding: 18px;
+}
+.garage-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.garage-name {
+  font-family: var(--font-display);
+  font-size: 15.5px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.garage-rating {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  color: var(--text-soft);
+}
+.garage-rating svg {
+  color: var(--mod);
+}
+.garage-rating strong {
+  color: var(--text);
+}
+.garage-meta {
+  text-align: end;
+  flex-shrink: 0;
+}
+.garage-dist {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+}
+.garage-state {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-mute);
+  margin-top: 4px;
+}
+.garage-state.open {
+  color: var(--minor);
+}
+.garage-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.garage-tag {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text-soft);
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+.garage-actions {
+  display: flex;
+  gap: 8px;
+  padding: 0 18px 18px;
+}
+.garage-actions .btn {
+  flex: 1;
+}
+
+/* ----------------------------------------------------------------------------
+   Profile
+   -------------------------------------------------------------------------- */
+.profile-head {
+  text-align: center;
+  padding: 36px 20px 32px;
+  background:
+    radial-gradient(420px 200px at 50% 0%, rgba(56, 189, 248, 0.14), transparent 70%),
+    linear-gradient(180deg, var(--surface), var(--bg-soft));
+  border-bottom: 1px solid var(--border);
+}
+.profile-avatar-wrap {
+  width: 84px;
+  height: 84px;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  padding: 3px;
+  background: linear-gradient(140deg, var(--accent), transparent 70%);
+  box-shadow: 0 0 28px var(--accent-glow);
+}
+.profile-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  background: var(--surface-2);
+}
+.profile-name {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--text);
+}
+.profile-loc {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  color: var(--text-soft);
+  margin-top: 6px;
+}
+.profile-loc svg {
+  color: var(--accent);
+}
+.profile-body {
+  padding-block: 22px 56px;
+  max-width: 560px;
+}
+.profile-card {
+  margin-bottom: 14px;
+}
+.card-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+.card-label svg {
+  color: var(--accent);
+}
+.field-label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-soft);
+  margin-bottom: 8px;
+}
+
+/* Avatar picker */
+.avatar-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.avatar-opt {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 2px solid var(--border);
+  background: var(--surface-2);
+  padding: 0;
+  transition: border-color 0.18s ease, transform 0.18s ease;
+}
+.avatar-opt:hover {
+  transform: translateY(-2px);
+}
+.avatar-opt img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.avatar-opt.sel {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-glow);
+}
+
+/* Settings row */
+.setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+.setting-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+.setting-title svg {
+  color: var(--accent);
+}
+.setting-sub {
+  font-size: 12px;
+  color: var(--text-soft);
+  margin-top: 3px;
+  margin-inline-start: 24px;
+}
+.seg {
+  display: flex;
+  gap: 3px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 3px;
+}
+.seg-btn {
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: var(--text-soft);
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.18s ease;
+}
+.seg-btn.on {
+  background: var(--accent);
+  color: #04141f;
+}
+.profile-text {
+  font-size: 13px;
+  color: var(--text-soft);
+  line-height: 1.6;
+  margin: 0 0 12px;
+}
+.pwa-steps {
+  display: flex;
+  gap: 8px;
+}
+.pwa-step {
+  flex: 1;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-line);
+  border-radius: 10px;
+  padding: 9px 6px;
+  text-align: center;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--accent);
+  line-height: 1.4;
+}
+.profile-card.secure {
+  background: var(--accent-soft);
+  border-color: var(--accent-line);
+}
+.profile-foot {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-mute);
+  padding-top: 16px;
+}
