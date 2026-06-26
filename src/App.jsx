@@ -372,15 +372,9 @@ function ScanScreen({ setTab, ar, setFaults }) {
         // Proxy not available - this is expected if the user hasn't created api/diagnose.js yet
         // Show a clear error explaining what to do
         fail(
-          "API proxy not set up yet.
-
-" +
-          "You need to create the file api/diagnose.js in your GitHub repo.
-
-" +
-          "Go to Phase 6 Step 3 in the setup guide for instructions.
-
-" +
+          "API proxy not set up yet.\n\n" +
+          "You need to create the file api/diagnose.js in your GitHub repo.\n\n" +
+          "Go to Phase 6 Step 3 in the setup guide for instructions.\n\n" +
           "Technical detail: " + proxyErr.message
         );
         return;
@@ -395,9 +389,7 @@ function ScanScreen({ setTab, ar, setFaults }) {
           const errBody = await response.json();
           errDetail = errBody.error?.message || errBody.message || errDetail;
         } catch {}
-        fail("API request failed: " + errDetail + ".
-
-Check that your ANTHROPIC_API_KEY is set in Vercel Environment Variables and that you have added billing credit at console.anthropic.com.");
+        fail("API request failed: " + errDetail + ".\n\nCheck that your ANTHROPIC_API_KEY is set in Vercel Environment Variables and that you have added billing credit at console.anthropic.com.");
         return;
       }
 
@@ -407,9 +399,7 @@ Check that your ANTHROPIC_API_KEY is set in Vercel Environment Variables and tha
       if (data.error) {
         const errMsg = data.error.message || JSON.stringify(data.error);
         if (errMsg.includes("credit") || errMsg.includes("billing") || data.error.type === "invalid_request_error") {
-          fail("Billing issue: " + errMsg + ".
-
-Add credit at console.anthropic.com under Billing.");
+          fail("Billing issue: " + errMsg + ".\n\nAdd credit at console.anthropic.com under Billing.");
         } else {
           fail("Anthropic API error: " + errMsg);
         }
@@ -452,12 +442,8 @@ Add credit at console.anthropic.com under Billing.");
 
         {/* Error message broken into readable lines */}
         <div style={{ background:"#fff", borderRadius:12, padding:14, marginBottom:16 }}>
-          {(errorMsg||"Unknown error").split("
-
-").map((para, i) => (
-            <p key={i} style={{ fontSize:13, color:T.navy, lineHeight:1.6, marginBottom: i < (errorMsg||"").split("
-
-").length-1 ? 10 : 0 }}>{para}</p>
+          {(errorMsg||"Unknown error").split("\n\n").map((para, i) => (
+            <p key={i} style={{ fontSize:13, color:T.navy, lineHeight:1.6, marginBottom: i < (errorMsg||"").split("\n\n").length-1 ? 10 : 0 }}>{para}</p>
           ))}
         </div>
 
